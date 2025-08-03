@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Accordion } from "./ui/Accordion"; // Reuse from component library
+import { Accordion } from "./ui/Accordion";
 import { Input } from "./ui/Input";
-import { FaQuestionCircle } from "react-icons/fa"; // For icons
+import { FaQuestionCircle } from "react-icons/fa";
 
 const faqCategories = {
   General: [
@@ -22,11 +22,12 @@ const faqCategories = {
 
 export default function FAQ() {
   const [search, setSearch] = useState("");
+
   const filteredFAQs = Object.entries(faqCategories).reduce((acc, [cat, items]) => {
     const filteredItems = items.filter((faq) => faq.question.toLowerCase().includes(search.toLowerCase()));
     if (filteredItems.length > 0) acc[cat] = filteredItems;
     return acc;
-  }, {} as typeof faqCategories);
+  }, {} as Record<string, { question: string; answer: string; }[]>);
 
   return (
     <section className="py-20 bg-gray-100">
@@ -39,7 +40,12 @@ export default function FAQ() {
         >
           Frequently Asked Questions
         </motion.h2>
-        
+        <Input
+          placeholder="Search FAQs..."
+          value={search}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+          className="max-w-md mx-auto mb-8"
+        />
         {Object.entries(filteredFAQs).map(([category, faqs], catIndex) => (
           <motion.div
             key={category}

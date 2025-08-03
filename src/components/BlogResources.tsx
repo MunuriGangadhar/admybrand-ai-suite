@@ -48,7 +48,7 @@ export default function BlogResources() {
             label=""
             placeholder="Search resources..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)} // Added explicit type here
             className="max-w-xs"
           />
         </div>
